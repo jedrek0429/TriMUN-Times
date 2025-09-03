@@ -1,40 +1,32 @@
 import Link from "next/link";
-import { getAllPosts } from "@/lib/posts";
-import { toKebab } from "@/lib/slug";
 
-export const metadata = { title: "Outlets · TriMUN Times" };
+export const metadata = {
+  title: "Outlets · TriMUN Times",
+};
 
 export default function OutletsPage() {
-  const posts = getAllPosts();
-  const byOutlet = posts.reduce((acc: Record<string, typeof posts>, p) => {
-    (acc[p.outlet] ??= []).push(p);
-    return acc;
-  }, {});
-  const outlets = Object.entries(byOutlet)
-    .map(([name, list]) => ({ name, list: list.slice(0, 4) }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  // you can fetch/group posts later—this is just a valid page stub
+  const outlets = [
+    { name: "The Pepper", slug: "the-pepper", blurb: "Satire & sting." },
+    { name: "DDD", slug: "ddd", blurb: "Deep Dive & Data." },
+    { name: "YEEHAW! TV", slug: "yeehaw-tv", blurb: "Clips & interviews." },
+    { name: "TriTok", slug: "tritok", blurb: "Shorts for the feed." },
+  ];
 
   return (
-    <div>
-      <h1 className="text-3xl font-semibold mb-2">Outlets</h1>
-      <p className="opacity-70 mb-8">Each outlet has its own voice. Browse them below.</p>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {outlets.map(({ name, list }) => (
-          <Link key={name} href={`/outlets/${toKebab(name)}`} className="card p-5 block hover:scale-[1.01] transition">
-            <div className="flex items-baseline justify-between gap-3">
-              <h2 className="text-xl font-semibold">{name}</h2>
-              <span className="text-xs brand-gold">{list.length} latest</span>
-            </div>
-            <ul className="mt-3 space-y-1 text-sm opacity-85">
-              {list.map(p => (
-                <li key={p.slug} className="truncate">• {p.title}</li>
-              ))}
-            </ul>
-            <div className="mt-4 text-sm brand-gold">View all →</div>
-          </Link>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-semibold">Outlets</h1>
+      <ul className="grid sm:grid-cols-2 gap-4">
+        {outlets.map(o => (
+          <li key={o.slug} className="rounded-xl p-4 bg-white/5 border border-white/10">
+            <h2 className="text-lg font-semibold">{o.name}</h2>
+            <p className="opacity-70 text-sm">{o.blurb}</p>
+            <Link className="text-sm underline mt-2 inline-block" href={`/outlets/${o.slug}`}>
+              View {o.name}
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
