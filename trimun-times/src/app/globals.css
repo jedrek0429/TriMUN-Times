@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #11071b;
+  --card: #26133a;
+  --ink: #f8f5ff;
+  --accent: #f0c24b;
+}
+
+html, body { height: 100%; }
+body {
+  background: radial-gradient(1200px 600px at 20% -10%, #522b7b 0%, #3c1d59 40%, #11071b 100%);
+  color: var(--ink);
+  font-family: theme(fontFamily.body);
+}
+
+.brand-gold { color: var(--accent); }
+.card {
+  background: linear-gradient(180deg, #2d1845, #241237);
+  border: 1px solid rgba(240,194,75,.25);
+  border-radius: 1.25rem;
+  box-shadow: var(--tw-shadow), 0 0 0 1px rgba(255,255,255,.02);
+}
+
+a { color: var(--accent); }
