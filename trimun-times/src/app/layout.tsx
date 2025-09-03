@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "TriMUN Times",
   description: "Your source for reports, stories & coverage",
@@ -20,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
             <nav className="text-sm opacity-90 flex gap-4">
-              <a href="/">Home</a>
-              <a href="/outlets">Outlets</a>
-              <a href="/about">About</a>
+              <Link href="/">Home</Link>
+              <Link href="/outlets">Outlets</Link>
+              <Link href="/about">About</Link>
             </nav>
           </div>
         </header>

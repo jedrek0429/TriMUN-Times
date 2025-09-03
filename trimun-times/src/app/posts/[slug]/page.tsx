@@ -16,7 +16,6 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       <h1 className="!mb-1">{post.meta.title}</h1>
       <p className="opacity-75 !mt-0">By {post.meta.author} · {new Date(post.meta.publishedAt).toLocaleDateString()}</p>
       <div className="mt-6 prose-headings:scroll-mt-24">
-        {/* @ts-expect-error Async RSC */}
         <MDXRemote
           source={post.content}
           options={{

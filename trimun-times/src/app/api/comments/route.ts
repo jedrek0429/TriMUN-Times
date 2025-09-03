@@ -1,3 +1,8 @@
+declare global {
+  // eslint-disable-next-line no-var
+  var lastPosts: Map<string, number> | undefined;
+}
+
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
@@ -39,12 +44,12 @@ export async function POST(req: NextRequest) {
   // naive in-memory limiter (resets on cold start). For production, move to Supabase/Redis.
   // Allow 1 comment per 30s per ipHash.
   const now = Date.now();
-  (global as any).lastPosts ??= new Map<string, number>();
-  const last = (global as any).lastPosts.get(ipHash) ?? 0;
+  global.lastPosts ??= new Map<string, number>();
+  const last = global.lastPosts.get(ipHash) ?? 0;
   if (now - last < 30_000) {
     return NextResponse.json({ error: "Too many comments. Try again shortly." }, { status: 429 });
   }
-  (global as any).lastPosts.set(ipHash, now);
+  global.lastPosts.set(ipHash, now);
 
   // basic content guard
   if (body.length > 4000) {
